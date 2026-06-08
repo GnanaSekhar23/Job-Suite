@@ -1,0 +1,66 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: job-suite-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jobsuite
+    username: postgres
+    password: postgres
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      keepalive-time: 60000
+      max-lifetime: 600000
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 20MB
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+app:
+  jwt:
+    secret: default-secret-overridden-by-local-profile
+    access-token-expiry-ms: 900000
+    refresh-token-expiry-ms: 604800000
+
+  azure-open-ai:
+    endpoint: http://localhost
+    api-key: not-configured
+    deployment-name: gpt-4.1-mini
+
+  apify:
+    api-token: not-configured
+
+  latex:
+    service-url: http://localhost:8090
+
+  cloudinary:
+    cloud-name: not-configured
+    api-key: not-configured
+    api-secret: not-configured
+
+  frontend-url: http://localhost:5173
+
+logging:
+  level:
+    com.jobsuite: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG

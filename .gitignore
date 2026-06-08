@@ -1,0 +1,20 @@
+# Backend
+backend/target/
+backend/.mvn/
+*.class
+*.jar
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Secrets — never push these
+backend/src/main/resources/application-local.properties
