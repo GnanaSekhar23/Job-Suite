@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Job Suite",
+  "version": "1.0.0",
+  "description": "Tailor your resume for any job posting instantly",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": [
+    "http://localhost:8080/*",
+    "https://*.indeed.com/*",
+    "https://*.linkedin.com/*",
+    "https://*.glassdoor.com/*",
+    "https://*.greenhouse.io/*",
+    "https://*.lever.co/*",
+    "https://*.workday.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.indeed.com/*",
+        "https://*.linkedin.com/*",
+        "https://*.glassdoor.com/*",
+        "https://*.greenhouse.io/*",
+        "https://*.lever.co/*",
+        "https://*.workday.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}

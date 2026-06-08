@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Job Suite</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 340px; min-height: 220px; background: #030712; color: #f9fafb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; }
+    .header { background: #111827; border-bottom: 1px solid #1f2937; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 16px; font-weight: 700; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #374151; }
+    .dot.on { background: #10b981; }
+    .body { padding: 16px; }
+    .job-card { background: #111827; border: 1px solid #1f2937; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+    .job-title { font-weight: 600; font-size: 13px; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .job-company { color: #9ca3af; font-size: 12px; }
+    .no-job { color: #6b7280; font-size: 12px; text-align: center; padding: 16px 0; line-height: 1.6; }
+    .btn { width: 100%; padding: 10px; border-radius: 8px; border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s; margin-bottom: 8px; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-purple { background: #7c3aed; color: white; }
+    .btn-purple:hover:not(:disabled) { background: #6d28d9; }
+    .btn-gray { background: #1f2937; color: white; }
+    .btn-gray:hover:not(:disabled) { background: #374151; }
+    .btn-danger { background: #1f2937; color: #f87171; }
+    .btn-danger:hover:not(:disabled) { background: #374151; }
+    .msg { padding: 8px 12px; border-radius: 8px; font-size: 12px; margin-top: 8px; }
+    .msg.success { background: #052e16; color: #4ade80; border: 1px solid #14532d; }
+    .msg.error { background: #1c0505; color: #f87171; border: 1px solid #7f1d1d; }
+    .msg.info { background: #0c1a2e; color: #60a5fa; border: 1px solid #1e3a5f; }
+    .login-section input { width: 100%; background: #111827; border: 1px solid #374151; border-radius: 8px; padding: 8px 10px; color: white; font-size: 13px; margin-bottom: 8px; }
+    .login-section input:focus { outline: none; border-color: #7c3aed; }
+    .login-section p { color: #9ca3af; font-size: 12px; margin-bottom: 12px; }
+    .divider { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+    .divider-line { flex: 1; height: 1px; background: #1f2937; }
+    .divider span { color: #4b5563; font-size: 11px; }
+    .btn-google { width: 100%; padding: 9px; border-radius: 8px; border: 1px solid #374151; background: white; color: #374151; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; transition: background 0.15s; }
+    .btn-google:hover { background: #f3f4f6; }
+    .user-email { font-size: 11px; color: #6b7280; text-align: center; margin-bottom: 8px; }
+    .footer { padding: 4px 16px 12px; text-align: center; }
+    .footer a { color: #4b5563; font-size: 11px; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Job Suite</h1>
+    <div class="dot" id="dot"></div>
+  </div>
+
+  <div class="body">
+    <div id="loginSection" style="display:none" class="login-section">
+      <p>Sign in to tailor resumes for jobs you browse</p>
+      <button class="btn-google" id="googleBtn">
+        <svg width="16" height="16" viewBox="0 0 18 18">
+          <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
+          <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z"/>
+          <path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957C.347 6.175 0 7.55 0 9s.348 2.825.957 4.039l3.007-2.332z"/>
+          <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/>
+        </svg>
+        Continue with Google
+      </button>
+      <div class="divider"><div class="divider-line"></div><span>or</span><div class="divider-line"></div></div>
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="password" placeholder="Password" />
+      <button class="btn btn-purple" id="loginBtn">Sign In</button>
+      <div id="loginMsg"></div>
+    </div>
+
+    <div id="mainSection" style="display:none">
+      <div class="user-email" id="userEmail"></div>
+      <div id="jobCard" class="job-card" style="display:none">
+        <div class="job-title" id="jobTitle"></div>
+        <div class="job-company" id="jobCompany"></div>
+      </div>
+      <div class="no-job" id="noJob" style="display:none">
+        Navigate to a job posting on Indeed, LinkedIn, or Glassdoor to tailor your resume
+      </div>
+      <button class="btn btn-purple" id="tailorBtn" style="display:none">
+        ✦ Tailor Resume for This Job
+      </button>
+      <button class="btn btn-gray" id="dashboardBtn">Open Dashboard</button>
+      <button class="btn btn-danger" id="signOutBtn">Sign Out</button>
+      <div id="mainMsg"></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a id="dashLink" href="http://localhost:5173" target="_blank">localhost:5173</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
